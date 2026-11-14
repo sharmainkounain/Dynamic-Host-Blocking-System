@@ -1,0 +1,6 @@
+{
+    "suspicious_ips": [
+        "127.0.0.1"
+    ],
+    "note": "These are detection candidates, not proof of malicious activity and not confirmation that a firewall block has been applied."
+}

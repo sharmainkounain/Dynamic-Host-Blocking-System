@@ -1,0 +1,15 @@
+TCP SYN RATE MONITOR
+========================================
+CSV file: syn_packets.csv
+Packets analysed: 6
+Observed time span: 209.707 seconds
+Average rate: 0.029 packets/second
+
+10-second window statistics:
+   0-  10 s: 1 SYN packets (0.10 packets/second)
+ 200- 210 s: 5 SYN packets (0.50 packets/second)
+
+Source IP counts:
+127.0.0.1: 6
+
+Note: A high SYN rate alone does not prove malicious activity.

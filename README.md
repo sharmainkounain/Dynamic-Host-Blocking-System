@@ -1,42 +1,79 @@
 # Dynamic Host Blocking System
 
-### An SDN-Based Network Security and Intrusion Detection System
+## Project Overview
 
-## Overview
+The Dynamic Host Blocking System is an SDN-based network security project that monitors TCP traffic, identifies suspicious hosts based on configurable thresholds, and dynamically blocks detected hosts using OpenFlow rules.
 
-The **Dynamic Host Blocking System** is a network security project designed to identify abnormal TCP traffic patterns and dynamically block suspicious hosts using Software-Defined Networking (SDN).
+The project combines traffic monitoring, suspicious host detection, and Software Defined Networking (SDN) to demonstrate automated network-level response.
 
-The system monitors network traffic, analyzes connection rates and flow statistics, detects potentially malicious hosts based on predefined thresholds, and updates blocking rules through an SDN controller.
+## Project Architecture
 
-## Objectives
+The system consists of three major components:
 
-- Generate TCP traffic from multiple network hosts.
-- Monitor TCP connection rates and network activity.
-- Collect and analyze network flow statistics.
-- Define thresholds to identify abnormal traffic patterns.
-- Detect and identify suspicious hosts.
-- Maintain a dynamic blacklist of suspicious IP addresses.
-- Install SDN flow rules to block identified hosts.
+### Person 1 – TCP Traffic Monitoring
+- Generates and monitors TCP traffic.
+- Captures packets using Wireshark.
+- Analyses TCP SYN packet rates.
+- Provides packet data for further analysis.
 
-## System Workflow
+Folder: `Person-1-Traffic-Monitoring/`
 
-1. **Traffic Generation:** Generate TCP traffic from multiple hosts in a virtual network.
-2. **Traffic Monitoring:** Monitor network connections and collect traffic statistics.
-3. **Traffic Analysis:** Analyze TCP traffic patterns and connection rates.
-4. **Suspicious Host Detection:** Identify hosts exhibiting abnormal traffic behaviour using predefined thresholds.
-5. **Dynamic Blacklisting:** Add detected suspicious hosts to a blacklist.
-6. **SDN-Based Blocking:** Install flow rules through the SDN controller to block traffic from suspicious hosts.
+### Person 2 – Traffic Analysis and Detection
+- Reads traffic from CSV datasets.
+- Counts TCP SYN packets within fixed time windows.
+- Identifies hosts exceeding the configured SYN threshold.
+- Generates suspicious IP candidates and detection logs.
+
+Folder: `Person-2-Traffic-Detection/`
+
+### Person 3 – SDN Controller and Dynamic Host Blocking
+- Implements an OS-Ken SDN controller.
+- Communicates with Open vSwitch using OpenFlow 1.3.
+- Provides HTTP API endpoints to block and unblock IP addresses.
+- Installs and removes OpenFlow DROP rules.
+- Maintains a blocklist, collects flow statistics, and logs controller events.
+
+Folder: `Person-3-SDN-Controller/`
 
 ## Technologies Used
 
-- **Python** – Traffic analysis, detection and socket programming.
-- **Mininet** – Virtual network emulation.
-- **Software-Defined Networking (SDN)** – Network traffic control and dynamic blocking.
-- **TCP/IP** – Network communication and traffic monitoring.
-- **Linux / Ubuntu** – Development and execution environment.
-- **Git & GitHub** – Version control and collaborative development.
+- Python
+- Mininet
+- Open vSwitch
+- OS-Ken
+- OpenFlow 1.3
+- Wireshark
+- Docker
+- pandas
 
-## Expected Outcome
+## Repository Structure
 
-The system aims to detect abnormal TCP traffic patterns, identify suspicious hosts, and dynamically restrict their network access through SDN flow rules.
+```text
+Dynamic-Host-Blocking-System/
+├── Person-1-Traffic-Monitoring/
+├── Person-2-Traffic-Detection/
+└── Person-3-SDN-Controller/
+```
 
+Each folder contains the implementation and supporting files for its respective project component.
+
+## Project Workflow
+
+1. TCP traffic is generated and monitored.
+2. Traffic data is analysed to identify suspicious hosts.
+3. Suspicious IP addresses are provided to the SDN controller.
+4. The controller installs OpenFlow DROP rules to block selected hosts.
+5. Hosts can be unblocked through the controller API.
+6. Flow statistics and controller events can be inspected.
+
+## Team Contributions
+
+| Member | Responsibility |
+|---|---|
+| Person 1 | TCP Traffic Monitoring |
+| Person 2 | Traffic Analysis and Detection |
+| Person 3 | SDN Controller and Dynamic Host Blocking |
+
+## Note
+
+The individual components are maintained in separate folders. The repository contains their source code, datasets, logs, and supporting documentation.

@@ -77,3 +77,45 @@ Each folder contains the implementation and supporting files for its respective 
 ## Note
 
 The individual components are maintained in separate folders. The repository contains their source code, datasets, logs, and supporting documentation.
+
+
+## System Architecture
+
+The following diagram illustrates how the three components of the Dynamic Host Blocking System work together.
+
+```mermaid
+flowchart TD
+    A["Person 1: TCP Traffic Monitoring"]
+    B["Wireshark Packet Capture"]
+    C["SYN Packet Data: CSV"]
+    D["Person 2: Traffic Analysis"]
+    E["SYN Rate Analysis"]
+    F["Suspicious Host Detection"]
+    G["suspicious_ips.json"]
+    H["Manual Handoff of Suspicious IP"]
+    I["Person 3: OS-Ken SDN Controller"]
+    J["HTTP API: /block"]
+    K["OpenFlow 1.3"]
+    L["Open vSwitch: s1"]
+    M["Mininet Hosts: h1, h2, h3"]
+    N["DROP Flow Rule"]
+    O["Flow Statistics and Event Logs"]
+
+    A --> B --> C --> D
+    D --> E --> F --> G
+    G -.-> H
+    H --> I --> J --> K --> L
+    L --> N
+    M <--> L
+    I --> O
+```
+
+### Architecture Explanation
+
+1. **Traffic Monitoring:** Person 1 captures and monitors TCP traffic.
+2. **Traffic Detection:** Person 2 analyses traffic and identifies suspicious hosts.
+3. **IP Handoff:** Suspicious IP candidates are provided to the SDN controller.
+4. **Dynamic Blocking:** Person 3's controller receives a blocking request and installs an OpenFlow DROP rule.
+5. **Monitoring:** The controller supports unblocking, flow statistics and event logging.
+
+*Note: The handoff between Person 2 and Person 3 is currently represented as manual. Automatic integration has not yet been demonstrated.*
